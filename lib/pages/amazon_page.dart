@@ -14,6 +14,7 @@ class _AmazonPageState extends State<AmazonPage> {
   double price;
   bool isLoading = true;
   WebViewController _controller;
+  bool isAProduct = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +32,11 @@ class _AmazonPageState extends State<AmazonPage> {
                   setState(() {
                     isLoading = false;
                   });
+                if (url.length > 150) {
+                    setState(() {
+                      isAProduct = true;
+                    });
+                  }
                 },
               ),
               isLoading
@@ -42,20 +48,22 @@ class _AmazonPageState extends State<AmazonPage> {
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            backgroundColor: Colors.amber,
-            onPressed: () async {
-              Alert.showLoadingAlert(context: context);
-              await getData();
-              Navigator.pop(context);
-              Alert.showAlert(
-                  context: context,
-                  price: price,
-                  url: url,
-                  title: title,
-                  img: img);
-            }));
+        floatingActionButton: isAProduct
+            ? FloatingActionButton(
+                child: Icon(Icons.add),
+                backgroundColor: Colors.amber,
+                onPressed: () async {
+                  Alert.showLoadingAlert(context: context);
+                  await getData();
+                  Navigator.pop(context);
+                  Alert.showAlert(
+                      context: context,
+                      price: price,
+                      url: url,
+                      title: title,
+                      img: img);
+                })
+            : Container());
   }
 
   getData() async {

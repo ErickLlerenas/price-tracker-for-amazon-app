@@ -10,7 +10,6 @@ void backgroundFetchHeadlessTask(String taskId) async {
   }
 void main(){
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.grey[50],
     statusBarColor: Color.fromRGBO(35, 47, 62, 1),
   ));
   runApp(MyApp());
